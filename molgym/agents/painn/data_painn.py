@@ -264,7 +264,7 @@ class TransformAtomsObjectsToGraphXyz:
             "num_nodes": torch.tensor(len(atoms.get_atomic_numbers())),
             "edges": torch.tensor(edges),
             "edges_displacement": torch.tensor(edges_displacement, dtype=default_type),
-            "cell": torch.tensor(atoms.get_cell(), dtype=default_type),
+            "cell": torch.tensor(np.array(atoms.get_cell()), dtype=default_type),
             "num_edges": torch.tensor(edges.shape[0])
         }
 

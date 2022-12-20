@@ -1,4 +1,5 @@
 import abc
+import logging
 import time
 from typing import Tuple, Dict
 
@@ -42,7 +43,7 @@ class InteractionReward(MolecularReward):
         e_tot = self._calculate_energy(all_atoms)
         e_parts = self._calculate_energy(atoms) + self._calculate_atomic_energy(new_atom)
         delta_e = e_tot - e_parts
-        print(f'e_tot: {e_tot},   delta_e: {delta_e}')
+        logging.debug(f'e_tot: {e_tot},   delta_e: {delta_e}')
         elapsed = time.time() - start
 
         reward = -1 * delta_e
@@ -73,7 +74,7 @@ class InteractionReward(MolecularReward):
         try:
             energy = self.calculator.get_potential_energy()
         except:
-            print('XTB calculation has FAILED!')
+            logging.debug('XTB calculation has FAILED!')
             energy = 42.0
         return energy
 

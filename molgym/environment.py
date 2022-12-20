@@ -64,10 +64,10 @@ class AbstractMolecularEnvironment(gym.Env, abc.ABC):
             )
 
         reward, info = self._calculate_reward(new_atom)
-        print(f'reward:  {reward}')
+        logging.debug(f'reward:  {reward}')
         if reward < self.min_reward:
             done = True
-            print(f'TERMINATING DUE TO MIN REWARD:  {reward}')
+            logging.debug(f'TERMINATING DUE TO MIN REWARD:  {reward}')
             reward = self.min_reward
 
 
