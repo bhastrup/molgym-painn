@@ -7,9 +7,9 @@ from typing import Tuple, Optional, Sequence
 import torch
 
 from molgym.agents.base import AbstractActorCritic
-# from molgym.agents.covariant.agent import CovariantAC
 from molgym.agents.internal.agent import SchNetAC
 from molgym.agents.painn.agent import PainnAC
+from molgym.agents.painn.agent_equivariant import PainnEquivariantAC
 from molgym.agents.painn.agent_schnet_edge import SchNetEdgeAC
 from molgym.spaces import ObservationSpace, ActionSpace
 
@@ -24,23 +24,18 @@ def build_model(config: dict, observation_space: ObservationSpace, action_space:
             network_width=config['network_width'],
             device=device,
         )
-    elif config['model'] == 'covariant':
-        return CovariantAC(
+    elif config['model'] == 'painn':
+        return PainnAC(
             observation_space=observation_space,
             action_space=action_space,
             min_max_distance=(config['min_mean_distance'], config['max_mean_distance']),
             network_width=config['network_width'],
-            maxl=config['maxl'],
-            num_cg_levels=config['num_cg_levels'],
-            num_channels_hidden=config['num_channels_hidden'],
-            num_channels_per_element=config['num_channels_per_element'],
-            num_gaussians=config['num_gaussians'],
-            bag_scale=config['bag_scale'],
-            beta=float(config['beta']) if config['beta'] is not None else config['beta'],
+            num_interactions=config["num_interactions"],
+            cutoff=config["cutoff"],
             device=device,
         )
-    elif config['model'] == 'painn':
-        return PainnAC(
+    elif config['model'] == 'painn_equivariant':
+        return PainnEquivariantAC(
             observation_space=observation_space,
             action_space=action_space,
             min_max_distance=(config['min_mean_distance'], config['max_mean_distance']),
