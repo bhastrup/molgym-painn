@@ -52,8 +52,8 @@ class InteractionReward(MolecularReward):
             'elapsed_time': elapsed,
         }
 
-        if e_tot == 42.0:
-            return 42.0, info
+        if e_tot == 1234.0:
+            return -1234.0, info
 
         return reward, info
 
@@ -74,8 +74,8 @@ class InteractionReward(MolecularReward):
         try:
             energy = self.calculator.get_potential_energy()
         except:
-            logging.debug('XTB calculation has FAILED!')
-            energy = 42.0
+            logging.warning('XTB calculation has FAILED!')
+            energy = 1234.0
         return energy
 
 
