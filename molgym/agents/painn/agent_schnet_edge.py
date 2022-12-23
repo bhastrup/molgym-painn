@@ -81,7 +81,7 @@ class SchNetEdgeAC(AbstractActorCritic):
                 ]
             )
         else:
-            self.edge_updates = [filter_pass(e_state, e, n)] * num_interactions
+            self.edge_updates = [filter_pass] * num_interactions
 
         # MolGym neural networks
         self.phi_beta = MLP(
