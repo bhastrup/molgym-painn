@@ -17,6 +17,11 @@ from molgym.tools.util import to_numpy
 from . import layer_painn as layer
 from . import data_painn
 
+
+# We can't use lambdas when running on GPU
+def filter_pass(a, b, c): return a
+
+
 class SchNetEdgeAC(AbstractActorCritic):
     def __init__(
         self,
@@ -76,7 +81,7 @@ class SchNetEdgeAC(AbstractActorCritic):
                 ]
             )
         else:
-            self.edge_updates = [lambda e_state, e, n: e_state] * num_interactions
+            self.edge_updates = [filter_pass(e_state, e, n)] * num_interactions
 
         # MolGym neural networks
         self.phi_beta = MLP(
