@@ -16,10 +16,8 @@ module load python/3.9.9
 module load scipy/1.7.3
 module load matplotlib/3.4.3
 
-### CHANGE THE FOLLOWING LINE TO MATCH YOUR OWN SETUP ###
+### CHANGE THE FOLLOWING LINES TO MATCH YOUR OWN SETUP ###
 export PROJECT_HOME=$HOME/02456_deep_learning/PROJECT
-
-
 export PROJECT_VENV=$PROJECT_HOME/.venv
 
 source $PROJECT_VENV/bin/activate
