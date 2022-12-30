@@ -76,5 +76,5 @@ for model in ["schnet_edge", "painn", "painn_equivariant", ]:  # <-- !!! set you
 
             # run the code 
             os.chdir(folder_name)
-            #run(f"bsub < {new_file_name}", shell=True)
+            run(f"bsub < {new_file_name}", shell=True)
             os.chdir("..")
