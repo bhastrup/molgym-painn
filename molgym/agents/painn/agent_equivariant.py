@@ -33,8 +33,6 @@ def determine_coordinates(
     if len(positions) == 1:
         direction = np.array([0, 0, 1])
 
-    # logging.debug(f"NOTICE ME!!: {len(positions)} - {direction} |{(direction**2).sum()**0.5:.4f}|")
-
     return positions[focus] + distance * direction
 
 
@@ -114,13 +112,11 @@ class PainnEquivariantAC(AbstractActorCritic):
             output_dims=(network_width, 1),
         )
 
-        self.log_stds = torch.nn.Parameter(torch.log(torch.tensor([0.15, 0.085], dtype=torch.float32)),
+        self.log_stds = torch.nn.Parameter(torch.log(torch.tensor([0.15, 0.12], dtype=torch.float32)),
                                            requires_grad=True)
 
         # Reparametrization of continuous variables: values are between [-1, 1] after tanh
         self.min_distance, self.max_distance = min_max_distance
-        self.min_angle, self.max_angle = 0, np.pi
-        self.min_dihedral, self.max_dihedral = 0, np.pi
 
         self.action_width = torch.tensor([
             self.max_distance - self.min_distance,
@@ -366,11 +362,6 @@ class PainnEquivariantAC(AbstractActorCritic):
             direction = actions[:, 4:7]
         elif self.training:
             direction = direction_dist.sample()
-            # logging.debug(f"Focused vector: {focused_vector}")
-            # logging.debug(f"Features: {atomic_vector_feats.flatten(2).transpose(1, 2)}")
-            # logging.debug(f"Directions: {direction_mean}")
-            logging.debug(f"Sampled Directions: {direction}")
-            logging.debug(f"Sampled Distances: {(direction[:, 0]**2 + direction[:, 1]**2 + direction[:, 2]**2)**0.5}")
         else:
             direction = normal_direction_mean
 
