@@ -37,6 +37,7 @@ colors = [
 class Args:
     name: str
     models: List[str]
+    labels: List[str]
     log_dir: str
     fig_scale: float
     show: bool
@@ -55,6 +56,9 @@ def parse_args() -> Args:
                         required=True)
     parser.add_argument('--models', help="The models to plot",
                         required=True, nargs='+', type=str)
+    parser.add_argument('--labels',
+                        help="The legend labels in the order of `models`",
+                        nargs='+', default=None, type=str)
     parser.add_argument('--log_dir',
                         help="The same as was given for running the model",
                         default='logs', type=str)
@@ -117,6 +121,13 @@ def get_data(
 
 def main():
     args = parse_args()
+    if not args.labels:
+        args.labels = args.models
+    
+    assert len(args.models) == len(args.labels), "When given, the number of labels must match number of models"
+
+    legend_labels = {m: l for m, l in zip(args.models, args.labels)}
+
     data = get_data(args.models, args.name, args.mode, args.log_dir)
 
     fig, ax = plt.subplots(
@@ -136,17 +147,18 @@ def main():
         ax.plot(
             group['total_num_steps'] / 1000,
             group[prop]['mean'],
-            alpha=0.75,
+            alpha=0.7,
             zorder=2 * j + 3,
-            label=model,
+            label=legend_labels[model],
             color=color,
+            linewidth=0.7,
         )
         # The indication of the std
         ax.fill_between(
             x=group['total_num_steps'] / 1000,
             y1=group[prop]['mean'] - group[prop]['std'],
             y2=group[prop]['mean'] + group[prop]['std'],
-            alpha=0.25,
+            alpha=0.2,
             zorder=2 * j + 2,
             color=color,
         )
