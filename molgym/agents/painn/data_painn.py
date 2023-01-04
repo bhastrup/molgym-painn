@@ -264,7 +264,7 @@ class TransformAtomsObjectsToGraphXyz:
             "num_nodes": torch.tensor(len(atoms.get_atomic_numbers())),
             "edges": torch.tensor(edges),
             "edges_displacement": torch.tensor(edges_displacement, dtype=default_type),
-            "cell": torch.tensor(np.array(atoms.get_cell()), dtype=default_type),
+            "cell": torch.tensor(atoms.get_cell(), dtype=default_type),
             "num_edges": torch.tensor(edges.shape[0])
         }
 
@@ -443,6 +443,31 @@ def pad_and_stack(tensors: List[torch.Tensor]):
             tensors, batch_first=True, padding_value=0
         )
     return torch.stack(tensors)
+    
+def pad_and_stacker(n_atoms: torch.Tensor, n_zs: torch.Tensor):
+    """
+
+    Args:
+        n_atoms: maximal number of atoms on the canvas
+        n_zs: (batch_size) Tensor with length of each sequence
+
+    Returns:
+        (prod(seq_len), *) Tensor
+
+    """
+    N=n_atoms-n_zs
+    tensor = torch.randn(n_atoms,n_atoms)
+    mask = torch.randn(tensor.size()).bool()
+    
+    for i in mask:
+        if n_zs<=n_atoms:
+            x = torch.tensor([True,False])
+            y = torch.repeat_interleave(x, torch.tensor([n_zs, N]))
+        z=np.vstack(y)
+    return z
+    
+    
+    
 
 
 def collate_atomsdata(graphs: List[dict], pin_memory=True):

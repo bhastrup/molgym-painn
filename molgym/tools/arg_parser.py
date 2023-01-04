@@ -49,7 +49,7 @@ def build_default_argparser() -> argparse.ArgumentParser:
                         help='model representation',
                         type=str,
                         default='internal',
-                        choices=['internal', 'covariant', 'painn', 'painn_equivariant', 'schnet_edge'])
+                        choices=['internal', 'covariant', 'painn', 'painn_equivariant', 'schnet_edge', 'painnMulti'])
     parser.add_argument('--update_edges', help='update edges in SchnetEdgeAC', type=bool, default=False)
     parser.add_argument('--min_mean_distance', help='minimum mean distance', type=float, default=0.8)
     parser.add_argument('--max_mean_distance', help='maximum mean distance', type=float, default=1.8)

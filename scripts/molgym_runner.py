@@ -22,13 +22,13 @@ single_dict = {"num_steps": "150000", "num_steps_per_iter": "192", "mini_batch_s
 large_dict = {"num_steps": "250000", "num_steps_per_iter": "256", "mini_batch_size": "32"}
 
 # set all the molecules we want to make for benchmarks
-all_seeds = [42, 1234, 888]
+all_seeds = [42, 1234, 888, 65536, 390625]
 all_formulas = ["C2H2O2", "CH3NO", "CH4O", "C3H5NO3", "C4H7N", "C3H8O"]
 all_symbols = ["X,C,H,O", "X,C,H,N,O", "X,C,H,O", "X,C,H,N,O", "X,C,H,N", "X,C,H,O"]
 all_sizes = [6, 6, 6, 12, 12, 12]
 
 # create for loops that creates the desired combinations of parameters
-for model in ["schnet_edge", "painn", "painn_equivariant", ]:  # <-- !!! set you model name as well !!!
+for model in ["painnMulti" ]:  # <-- !!! set you model name as well !!!
     single_dict["model"] = model
     large_dict["model"] = model
 
