@@ -2,7 +2,6 @@ from re import search
 from typing import List
 from ase.calculators.calculator import FileIOCalculator
 from ase.io import read
-from ase.units import Hartree
 
 
 class XTB(FileIOCalculator):
